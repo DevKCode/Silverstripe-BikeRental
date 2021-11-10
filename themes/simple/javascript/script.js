@@ -145,35 +145,7 @@ jQuery.noConflict();
     };
 // ---------------------------------------------------------
 
-    getCurrentWeekDates();
 
-
-    function getCurrentWeekDates() {
-        console.log('get currentt dates');
-        let currentDate = new Date;
-        let currentYear = currentDate.getFullYear();
-        let currentMonth  = currentDate.getMonth();
-        let currentDay = currentDate.getDate();
-        let remainingDays = currentDate.getDay() + 6;
-        var weekDayDom = $('#weekdays');
-        console.log(weekDayDom);
-        let dates = [];
-        for(let i=0; i<remainingDays; i++){
-            let newDate = new Date(currentYear,currentMonth, currentDay + i);
-            console.log(newDate.toLocaleDateString());
-            $('<button/>')
-                .addClass('btn btn-outline-primary')
-                .text(newDate.toLocaleDateString())
-                .on('click',selectedDate)
-                .appendTo(weekDayDom);
-        }
-    }
-
-    function selectedDate(e){
-         console.log($(e.target).text());
-
-
-    }
 
 }(jQuery));
 

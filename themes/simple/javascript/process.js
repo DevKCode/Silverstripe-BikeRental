@@ -1,23 +1,22 @@
-console.log('loaded external file');
+
 getCurrentWeekDates();
 
 
 function getCurrentWeekDates() {
-    console.log('get currentt dates');
     let currentDate = new Date;
     let currentYear = currentDate.getFullYear();
     let currentMonth  = currentDate.getMonth();
     let currentDay = currentDate.getDate();
-    let remainingDays = currentDate.getDay() + 4;
+    let remainingDays =5;
     var weekDayDom = $('#dateList');
-    console.log(weekDayDom);
     let dates = [];
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     for(let i=0; i<=remainingDays; i++){
         let newDate = new Date(currentYear,currentMonth, currentDay + i);
-        console.log(newDate.toLocaleDateString());
         $('<button/>')
             .addClass('btn btn-outline-primary')
-            .text(newDate.toLocaleDateString())
+            .text(newDate.toLocaleDateString('en-US',options))
+            .data('date',newDate.toLocaleDateString())
             .on('click',selectedDate)
             .appendTo(weekDayDom);
     }
@@ -25,8 +24,12 @@ function getCurrentWeekDates() {
 
 function selectedDate(e){
     e.preventDefault();
-    console.log($(e.target).text());
-    let url = 'http://localhost:81/bikerental/apibike/bikes/';
+    console.log($(e.target).data());
+    let clickedDate = $(e.target).data();
+    let [month,date,year] = clickedDate['date'].split('/');
+    let dateParam = `${year}-${month}-${date}`;
+    let baseUrl = 'http://localhost:81/bikerental/apibike/bikes/';
+    let url = `${baseUrl}${dateParam}` ;
     console.log('url', url);
 
     $.ajax({
